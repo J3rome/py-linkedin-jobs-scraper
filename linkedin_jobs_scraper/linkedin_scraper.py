@@ -1,6 +1,5 @@
 import traceback
 from inspect import signature
-from types import FunctionType
 from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urlparse, urlencode
 from typing import Union, Callable, List
@@ -262,8 +261,8 @@ class LinkedinScraper:
         if not isinstance(event, Events):
             raise ValueError(f'Event must be an instance of enum class Events')
 
-        if not isinstance(cb, FunctionType):
-            raise ValueError('Callback must be a function')
+        if not callable(cb):
+            raise ValueError('Callback must be callable')
 
         if event == Events.DATA or event == Events.ERROR or event == Events.METRICS:
             allowed_params = 1
